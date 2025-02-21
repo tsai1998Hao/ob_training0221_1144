@@ -4,6 +4,8 @@ using System.Web;
 using System.Web.UI;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ob_training0221_1144
 {
@@ -17,6 +19,7 @@ namespace ob_training0221_1144
 
         protected void btnFilter_Click(object sender, EventArgs e)
         {
+            //要先設置 asp:TextBox ID="email" runat="server"
             string Name = name.Text;
             string Email = email.Text;
             string Password = password.Text;
@@ -27,6 +30,10 @@ namespace ob_training0221_1144
                 Response.Write("<script>alert('請填寫所有欄位');</script>");
                 return;
             }
+
+
+            // 將密碼加密成 MD5 
+            string encryptedPassword = GetMD5Hash(Password);
 
             try
             {
@@ -43,7 +50,7 @@ namespace ob_training0221_1144
                         // 使用參數化查詢，防止 SQL 注入攻擊
                         cmd.Parameters.AddWithValue("@name", Name);
                         cmd.Parameters.AddWithValue("@email", Email);
-                        cmd.Parameters.AddWithValue("@password", Password);
+                        cmd.Parameters.AddWithValue("@password", encryptedPassword);
                         cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
 
                         conn.Open();
@@ -67,75 +74,21 @@ namespace ob_training0221_1144
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        //protected void Page_LoadComplete(object sender, EventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("Page_LoadComplete triggered.");
-
-        //    if (Request.HttpMethod == "POST")
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("跑出來1");
-
-        //        try
-        //        {
-
-        //            // 確保請求的 Content-Type 為 application/json
-        //            if (!Request.ContentType.ToLower().Contains("application/json"))
-        //            {
-        //                Response.ContentType = "application/json";
-        //                Response.Write("{\"success\": false, \"error\": \"Invalid content type. Expected application/json.\"}");
-        //                Response.End();
-        //                return;
-        //            }
-
-        //            // 讀取 JSON 數據
-        //            string jsonData = new StreamReader(Request.InputStream).ReadToEnd();
-        //            System.Diagnostics.Debug.WriteLine("Received JSON: " + jsonData); // 用來 Debug
-
-
-
-        //            // 解析 JSON
-        //            var userData = JsonConvert.DeserializeObject<User>(jsonData);
-        //            if (userData == null)
-        //            {
-        //                throw new Exception("Invalid JSON format.");
-        //            }
-        //            string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
-        //            string query = "INSERT INTO users (name, email, password, created_at) VALUES (@name, @email, @password, @created_at)";
-
-        //            using (SqlConnection conn = new SqlConnection(connectionString))
-        //            {
-        //                SqlCommand cmd = new SqlCommand(query, conn);
-        //                cmd.Parameters.AddWithValue("@name", userData.Name);
-        //                cmd.Parameters.AddWithValue("@email", userData.Email);
-        //                cmd.Parameters.AddWithValue("@password", userData.Password);
-        //                cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
-
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //            }
-
-        //            Response.ContentType = "application/json";
-        //            Response.Write("{\"success\": true}");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Response.ContentType = "application/json";
-        //            Response.Write("{\"success\": false, \"error\": \"" + ex.Message + "\"}");
-        //        }
-        //        Response.End();
-        //    }
-        //}
+        //密碼加密
+        private string GetMD5Hash(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    sb.Append(b.ToString("x2")); // 轉換成 16 進位字串
+                }
+                return sb.ToString();
+            }
+        }
     }
 
     public class User
@@ -145,3 +98,5 @@ namespace ob_training0221_1144
         public string Password { get; set; }
     }
 }
+
+

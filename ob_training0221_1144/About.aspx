@@ -4,47 +4,31 @@
 
 
     <main aria-labelledby="title">
-        <h2 id="title"><%: Title %>.</h2>
-        <h3>測試</h3>
-        <button type="button" onclick="fakeLogin()">假裝登入</button>
     </main>
 
 
-
-
-
-
-    <h1>會員註冊</h1>
+    <h1>首頁---會員註冊</h1>
     <div>
         <label for="name">Name:</label>
-        <%--<input type="text" id="name" name="name" required />--%>
         <asp:TextBox ID="name" runat="server" placeholder="請輸入會員名稱"  oninput="validateAoumt(this)" ></asp:TextBox>
     </div>
     <div>
         <label for="email">Email:</label>
         <asp:TextBox ID="email" runat="server" placeholder="請輸入電子信箱"  oninput="validateAoumt(this)" ></asp:TextBox>
-        
     </div>
     <div>
         <label for="password">Password:</label>
         <asp:TextBox ID="password" runat="server" placeholder="請輸入密碼"  oninput="validateAoumt(this)" ></asp:TextBox>        
     </div>
     <asp:LinkButton ID="btnFilter" runat="server" class="btn btn-primary" OnClick="btnFilter_Click" Visible="true" CausesValidation="true">註冊</asp:LinkButton>
-    <%--<button type="submit"  onclick="registerUser()">新增會員資料</button>--%>
-<%--    <asp:Button ID="btnSubmit" runat="server" Text="新增會員資料" OnClick="btnSubmit_Click" />--%>
-
-
+    <button type="button" onclick="goToLogin()">進入登入頁面</button>
 
 
 
 
     <script type="text/javascript">
-        function fakeLogin() {
-            // 在這裡可以執行任何登入過程的代碼
-            alert("已成功登入！");
-
-            // 然後跳轉到 showCustomers.aspx
-            window.location.href = "showCustomers.aspx";
+        function goToLogin() {
+            window.location.href = "Login.aspx";
         }
 
 
@@ -89,9 +73,6 @@
         //        alert('請填寫所有欄位');
         //    }
         //}
-
-
-
 
 </script>
 
