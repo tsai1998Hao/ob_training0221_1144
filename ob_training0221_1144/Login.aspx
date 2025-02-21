@@ -15,7 +15,7 @@
     <script>
         function fakeLogin() {
             // 在這裡可以執行任何登入過程的代碼
-            alert("已成功登入！");
+            alert("已成功登入!！");
 
             // 然後跳轉到 showCustomers.aspx
             window.location.href = "showCustomers.aspx";
