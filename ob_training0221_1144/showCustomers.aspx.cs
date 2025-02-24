@@ -84,13 +84,13 @@ namespace ob_training0221_1144
 
             string phone = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtPhone")).Text;
             string address = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtAddress")).Text;
-            string user_id = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtUser_id")).Text;
+            //string user_id = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtUser_id")).Text;
 
 
             //資料庫連線設定
             string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
             //string connectionString = "Server=localhost;Initial Catalog=TestProject_DB;User ID=sa;Password=test0713;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
-            string query = "UPDATE Customers SET Name = @Name, Phone = @Phone, Address= @Address, User_id = @User_id WHERE Id = @Id";
+            string query = "UPDATE Customers SET Name = @Name, Phone = @Phone, Address= @Address WHERE Id = @Id";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -98,7 +98,7 @@ namespace ob_training0221_1144
                 cmd.Parameters.AddWithValue("@Name", name);
                 cmd.Parameters.AddWithValue("@Phone", phone);
                 cmd.Parameters.AddWithValue("@Address", address);
-                cmd.Parameters.AddWithValue("@User_id", user_id);
+                //cmd.Parameters.AddWithValue("@User_id", user_id);
                 cmd.Parameters.AddWithValue("@Id", id);  // 確保 @Id 被正確綁定
 
                 conn.Open();
@@ -154,7 +154,15 @@ namespace ob_training0221_1144
             gvCustomers.EditIndex = -1;
 
             // 重新綁定資料（這樣就可以顯示更新後的資料）
-            BindGridView();
+            if (Session["UserId"] != null) // 檢查是否有存 userId
+            {
+                int userId = Convert.ToInt32(Session["UserId"]);
+                LoadCustomers(userId);  // 傳入 userId，重新加載資料
+            }
+            else
+            {
+                Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+            }
         }
 
 
@@ -188,7 +196,22 @@ namespace ob_training0221_1144
                 string name = ((TextBox)gvCustomers.FooterRow.FindControl("txtInsertName")).Text;
                 string phone = ((TextBox)gvCustomers.FooterRow.FindControl("txtInsertPhone")).Text;
                 string address = ((TextBox)gvCustomers.FooterRow.FindControl("txtInsertAddress")).Text;
-                string userId = ((TextBox)gvCustomers.FooterRow.FindControl("txtInsertUserId")).Text;
+
+                int userId = 0;  // 這樣在全程中都能訪問到 userId
+
+
+                if (Session["UserId"] != null) // 檢查是否有存 userId
+                {
+                    userId = Convert.ToInt32(Session["UserId"]);
+                }
+                else
+                {
+                    Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+                }
+
+
+
+                //string userId = ((TextBox)gvCustomers.FooterRow.FindControl("txtInsertUserId")).Text;
 
                 // SQL 插入語句
                 string query = "INSERT INTO Customers (Name, Phone, Address, User_id) VALUES (@Name, @Phone, @Address, @UserId)";
@@ -216,15 +239,8 @@ namespace ob_training0221_1144
                 // 更新 GridView，顯示新增的資料
 
 
-                if (Session["UserId"] != null) // 檢查是否有存 userId
-                {
-                    int user_Id = Convert.ToInt32(Session["UserId"]);
-                    LoadCustomers(user_Id);  // 傳入 userId，重新加載資料，確保重新載入資料並顯示最新的資料  // 確保 GridView 顯示最新的資料
-                }
-                else
-                {
-                    Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
-                }
+                    LoadCustomers(userId);  // 傳入 userId，重新加載資料，確保重新載入資料並顯示最新的資料  // 確保 GridView 顯示最新的資料
+                
             }
         }
 

@@ -17,7 +17,8 @@
             ShowFooter="true"> 
             <Columns>
                 <%--BoundField代表: 只能顯示不能編輯--%>
-                <asp:BoundField DataField="Id" HeaderText="Customer ID" SortExpression="Id" />
+                <%-- 讓標籤隱藏  Visible="False"--%>
+                <asp:BoundField DataField="Id" HeaderText="Customer ID" SortExpression="Id" Visible="False"/>
 
 
                 <%--TemplateField代表: 可以編輯--%>
@@ -51,36 +52,6 @@
                 </asp:TemplateField>
 
 
-                <asp:TemplateField HeaderText="user_id">
-                    <ItemTemplate>
-                        <asp:TextBox ID="txtUser_id" runat="server" Text='<%# Bind("user_id") %>' Enabled="false"></asp:TextBox>
-                    </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:TextBox ID="txtUser_id" runat="server" Text='<%# Bind("user_id") %>'></asp:TextBox>
-                    </EditItemTemplate>
-                </asp:TemplateField>
-
-
-                
-        <asp:TemplateField>
-            <FooterTemplate>
-                <!-- 新增資料用的 TextBox 和 Button -->
-                <asp:TextBox ID="txtInsertName" runat="server" placeholder="Enter Name"></asp:TextBox>
-                <asp:TextBox ID="txtInsertPhone" runat="server" placeholder="Enter Phone"></asp:TextBox>
-                <asp:TextBox ID="txtInsertAddress" runat="server" placeholder="Enter Address"></asp:TextBox>
-                <asp:TextBox ID="txtInsertUserId" runat="server" placeholder="Enter User ID"></asp:TextBox>
-                <asp:Button ID="btnInsert" runat="server" Text="Insert" CommandName="Insert" />
-            </FooterTemplate>
-        </asp:TemplateField>
-
-
-
-
-
-
-
-
-
 
 
                 <%-- GridView 進入編輯模式後，會自動將 Edit 按鈕替換成 Update 按鈕，並顯示 Cancel 按鈕。--%>
@@ -94,7 +65,29 @@
                         <asp:Button ID="btnCancel" runat="server" Text="Cancel" CommandName="Cancel" />
                     </EditItemTemplate>
                 </asp:TemplateField>
+
+
+
             </Columns>
+            <Columns>
+
+                <%-- 新增，TemplateField 要放在 <Columns>內   --%>
+                <asp:TemplateField>
+                    <FooterTemplate>
+                        <!-- 新增資料用的 TextBox 和 Button -->
+                        <asp:TextBox ID="txtInsertName" runat="server" placeholder="Enter Name"></asp:TextBox>
+                        <asp:TextBox ID="txtInsertPhone" runat="server" placeholder="Enter Phone"></asp:TextBox>
+                        <asp:TextBox ID="txtInsertAddress" runat="server" placeholder="Enter Address"></asp:TextBox>
+                        <%--<asp:TextBox ID="txtInsertUserId" runat="server" placeholder="Enter User ID"></asp:TextBox>--%>
+                        <asp:Button ID="btnInsert" runat="server" Text="Insert" CommandName="Insert" />
+                    </FooterTemplate>
+                </asp:TemplateField>
+
+
+            </Columns>
+
+
+
         </asp:GridView>
      </div>
 </form>
