@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Collections;
 using System.Security.Policy;
 using System.Net;
+using System.Reflection.Emit;
 
 
 namespace ob_training0221_1144
@@ -61,6 +62,13 @@ namespace ob_training0221_1144
         protected void gvCustomers_RowEditing(object sender, GridViewEditEventArgs e)
         {
             gvCustomers.EditIndex = e.NewEditIndex;
+
+            int id = Convert.ToInt32(gvCustomers.DataKeys[e.NewEditIndex].Value);
+
+            // 顯示抓到的 Id
+            System.Diagnostics.Debug.WriteLine("我抓到了這一筆 Id: " + id);
+
+
             if (Session["UserId"] != null) // 檢查是否有存 userId
             {
                 int userId = Convert.ToInt32(Session["UserId"]);
@@ -79,7 +87,8 @@ namespace ob_training0221_1144
         protected void gvCustomers_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             int id = Convert.ToInt32(gvCustomers.DataKeys[e.RowIndex].Value);
-            System.Diagnostics.Debug.WriteLine(id);
+            System.Diagnostics.Debug.WriteLine("我抓到了這一筆",id);
+            Label1.Text = "Id: " + id.ToString();
             string name = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtName")).Text;
 
             string phone = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtPhone")).Text;
@@ -243,6 +252,68 @@ namespace ob_training0221_1144
                 
             }
         }
+
+
+        //查詢後的
+        //LoadCustomers2
+
+
+
+
+        //查詢-同步
+        protected void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            //string searchKeyword = txtSearch.Text.Trim(); // 取得搜尋關鍵字
+            //LoadCustomers(searchKeyword); // 根據搜尋關鍵字加載資料
+                                          
+        }
+
+        //查詢-按鈕
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchKeyword = txtSearch.Text.Trim(); // 取得搜尋關鍵字
+            LoadCustomers_sch(searchKeyword); // 根據搜尋關鍵字加載資料
+
+            txtSearch.Text = string.Empty;// 清空搜尋框的文字
+
+        }
+
+        private void LoadCustomers_sch(string searchKeyword)
+        {
+            int userId = 0;  // 這樣在全程中都能訪問到 userId
+
+            if (Session["UserId"] != null) // 檢查是否有存 userId
+            {
+                userId = Convert.ToInt32(Session["UserId"]);
+            }
+            else
+            {
+                Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+            }
+
+            string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
+            string query = "SELECT * FROM Customers WHERE (Name LIKE @SearchKeyword OR Phone LIKE @SearchKeyword OR Address LIKE @SearchKeyword) AND User_id = @userId";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@SearchKeyword", "%" + searchKeyword + "%"); // 搜尋關鍵字包含在 Name、Phone 或 Address 欄位中
+                    cmd.Parameters.AddWithValue("@userId", userId); // 加入 userId 參數
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    gvCustomers.DataSource = dt;
+                    gvCustomers.DataBind();
+                }
+            }
+        }
+
+
+
+
 
 
 
