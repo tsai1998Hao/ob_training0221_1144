@@ -3,7 +3,7 @@
 
 <form id="form1" runat="server">
     <div>
-        <asp:Label ID="Label1" runat="server" Text="Id: "></asp:Label>
+<%--        <asp:Label ID="Label1" runat="server" Text="Id: "></asp:Label>--%>
 
 
 
@@ -30,16 +30,16 @@
             <Columns>
                 <%--BoundField代表: 只能顯示不能編輯--%>
                 <%-- 讓標籤隱藏  Visible="False"--%>
-                <asp:BoundField DataField="Id" HeaderText="Customer ID" SortExpression="Id"/>
+                <asp:BoundField DataField="Id" HeaderText="Customer ID" SortExpression="Id" Visible="False"/>
 
 
                 <%--TemplateField代表: 可以編輯--%>
                 <asp:TemplateField HeaderText="Name">
                     <ItemTemplate>
-                        <asp:TextBox ID="txtName" runat="server" Text='<%# Bind("Name") %>' Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="editName" runat="server" Text='<%# Bind("Name") %>' Enabled="false"></asp:TextBox>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="txtName" runat="server" Text='<%# Bind("Name") %>'></asp:TextBox>
+                        <asp:TextBox ID="updateName" runat="server" Text='<%# Bind("Name") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
 
@@ -47,19 +47,19 @@
 
                 <asp:TemplateField HeaderText="phone">
                     <ItemTemplate>
-                        <asp:TextBox ID="txtPhone" runat="server" Text='<%# Bind("phone") %>' Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="editPhone" runat="server" Text='<%# Bind("phone") %>' Enabled="false"></asp:TextBox>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="txtPhone" runat="server" Text='<%# Bind("phone") %>'></asp:TextBox>
+                        <asp:TextBox ID="updatePhone" runat="server" Text='<%# Bind("phone") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="address">
                     <ItemTemplate>
-                        <asp:TextBox ID="txtAddress" runat="server" Text='<%# Bind("address") %>' Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="editAddress" runat="server" Text='<%# Bind("address") %>' Enabled="false"></asp:TextBox>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="txtAddress" runat="server" Text='<%# Bind("address") %>'></asp:TextBox>
+                        <asp:TextBox ID="updateAddress" runat="server" Text='<%# Bind("address") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
 
@@ -69,12 +69,12 @@
                 <%-- GridView 進入編輯模式後，會自動將 Edit 按鈕替換成 Update 按鈕，並顯示 Cancel 按鈕。--%>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Button ID="btnEdit" runat="server" Text="編輯" CommandName="Edit" />
+                        <asp:Button ID="btnEdit" runat="server" Text="編輯" CommandName="Edit" EnableViewState = true/>
                         <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="Delete" />
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:Button ID="btnUpdate" runat="server" Text="更新編輯" CommandName="Update" />
-                        <asp:Button ID="btnCancel" runat="server" Text="取消編輯" CommandName="Cancel" />
+                        <asp:Button ID="btnUpdate" runat="server" Text="更新編輯" CommandName="Update" EnableViewState = true/>
+                        <asp:Button ID="btnCancel" runat="server" Text="取消編輯" CommandName="Cancel" EnableViewState = true/>
                     </EditItemTemplate>
                 </asp:TemplateField>
 

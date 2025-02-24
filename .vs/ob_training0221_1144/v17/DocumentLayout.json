@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\gmpit\\OneDrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8C108EB6-0DC1-4D29-85AB-9F7A8B59AC7E}|ob_training0221_1144\\ob_training0221_1144.csproj|c:\\users\\gmpit\\onedrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\ob_training0221_1144\\api\\user\\getuserbyemail.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8C108EB6-0DC1-4D29-85AB-9F7A8B59AC7E}|ob_training0221_1144\\ob_training0221_1144.csproj|solutionrelative:ob_training0221_1144\\api\\user\\getuserbyemail.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C108EB6-0DC1-4D29-85AB-9F7A8B59AC7E}|ob_training0221_1144\\ob_training0221_1144.csproj|c:\\users\\gmpit\\onedrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\ob_training0221_1144\\api\\user\\getuserbyemail.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8C108EB6-0DC1-4D29-85AB-9F7A8B59AC7E}|ob_training0221_1144\\ob_training0221_1144.csproj|solutionrelative:ob_training0221_1144\\api\\user\\getuserbyemail.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 237,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GetUserByEmail.aspx",
+              "DocumentMoniker": "C:\\Users\\gmpit\\OneDrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\ob_training0221_1144\\api\\user\\GetUserByEmail.aspx",
+              "RelativeDocumentMoniker": "ob_training0221_1144\\api\\user\\GetUserByEmail.aspx",
+              "ToolTip": "C:\\Users\\gmpit\\OneDrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\ob_training0221_1144\\api\\user\\GetUserByEmail.aspx",
+              "RelativeToolTip": "ob_training0221_1144\\api\\user\\GetUserByEmail.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-02-24T10:30:17.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GetUserByEmail.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\gmpit\\OneDrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\ob_training0221_1144\\api\\user\\GetUserByEmail.aspx.cs",
+              "RelativeDocumentMoniker": "ob_training0221_1144\\api\\user\\GetUserByEmail.aspx.cs",
+              "ToolTip": "C:\\Users\\gmpit\\OneDrive\\\u684C\u9762\\\u5DE5\u4F5C\u7AD9\\ob_training0221_1144\\ob_training0221_1144\\api\\user\\GetUserByEmail.aspx.cs",
+              "RelativeToolTip": "ob_training0221_1144\\api\\user\\GetUserByEmail.aspx.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T10:27:06.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 163,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -16,6 +16,14 @@ namespace ob_training0221_1144
 {
     public partial class showCustomers : System.Web.UI.Page
     {
+
+
+
+
+
+
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -30,7 +38,11 @@ namespace ob_training0221_1144
                     Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
                 }
             }
+
+
+
         }
+
 
         private void LoadCustomers(int userId)
         {
@@ -59,25 +71,71 @@ namespace ob_training0221_1144
 
 
 
+
+
+        private void LoadCustomers2 (int userId, string searchKeyword)
+        {
+            //資料庫連線設定
+            string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
+            // string connectionString = "Server=localhost;Initial Catalog=TestProject_DB;User ID=sa;Password=test0713;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
+
+            //SQL 語法
+            string query = "SELECT * FROM Customers WHERE (Name LIKE @SearchKeyword OR Phone LIKE @SearchKeyword OR Address LIKE @SearchKeyword) AND User_id = @userId";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);  // 綁定參數，避免 SQL 注入
+                    cmd.Parameters.AddWithValue("@SearchKeyword", "%" + searchKeyword + "%"); // 正確綁定參數
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    gvCustomers.DataSource = dt;
+                    gvCustomers.DataBind();
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        int edit_id;
+
         protected void gvCustomers_RowEditing(object sender, GridViewEditEventArgs e)
         {
             gvCustomers.EditIndex = e.NewEditIndex;
 
             int id = Convert.ToInt32(gvCustomers.DataKeys[e.NewEditIndex].Value);
-
+            edit_id = Convert.ToInt32(gvCustomers.DataKeys[e.NewEditIndex].Value);
             // 顯示抓到的 Id
             System.Diagnostics.Debug.WriteLine("我抓到了這一筆 Id: " + id);
 
 
-            if (Session["UserId"] != null) // 檢查是否有存 userId
+            int userId = Convert.ToInt32(Session["UserId"]);
+            string searchKeyword = txtSearch.Text.Trim(); // 取得搜尋框的值
+
+            if (!string.IsNullOrEmpty(searchKeyword))
             {
-                int userId = Convert.ToInt32(Session["UserId"]);
-                LoadCustomers(userId);  // 傳入 userId，重新加載資料
+                LoadCustomers2(userId, searchKeyword); // 帶入搜尋關鍵字
             }
             else
             {
-                Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+                LoadCustomers(userId); // 沒有輸入關鍵字時，載入所有資料
             }
+
         }
 
 
@@ -88,11 +146,11 @@ namespace ob_training0221_1144
         {
             int id = Convert.ToInt32(gvCustomers.DataKeys[e.RowIndex].Value);
             System.Diagnostics.Debug.WriteLine("我抓到了這一筆",id);
-            Label1.Text = "Id: " + id.ToString();
-            string name = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtName")).Text;
+            //Label1.Text = "Id: " + id.ToString();
+            string name = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("updateName")).Text;
 
-            string phone = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtPhone")).Text;
-            string address = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtAddress")).Text;
+            string phone = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("updatePhone")).Text;
+            string address = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("updateAddress")).Text;
             //string user_id = ((TextBox)gvCustomers.Rows[e.RowIndex].FindControl("txtUser_id")).Text;
 
 
@@ -254,12 +312,6 @@ namespace ob_training0221_1144
         }
 
 
-        //查詢後的
-        //LoadCustomers2
-
-
-
-
         //查詢-同步
         protected void txtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -274,7 +326,7 @@ namespace ob_training0221_1144
             string searchKeyword = txtSearch.Text.Trim(); // 取得搜尋關鍵字
             LoadCustomers_sch(searchKeyword); // 根據搜尋關鍵字加載資料
 
-            txtSearch.Text = string.Empty;// 清空搜尋框的文字
+            //txtSearch.Text = string.Empty;// 清空搜尋框的文字
 
         }
 
@@ -305,8 +357,23 @@ namespace ob_training0221_1144
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
-                    gvCustomers.DataSource = dt;
-                    gvCustomers.DataBind();
+
+                    if (dt.Rows.Count == 0) // 如果搜尋結果為空
+                    {
+                        // 顯示沒有符合的結果訊息
+                        string alertMessage = "沒有找到符合搜尋條件的資料！";
+                        string queryToShow = "SELECT * FROM Customers WHERE User_id = " + userId;
+                        alertMessage += "查無資料，請重新輸入";
+
+                        Response.Write("<script>alert('" + alertMessage + "');</script>");
+                        LoadCustomers(userId);
+
+                    }
+                    else
+                    {
+                        gvCustomers.DataSource = dt;
+                        gvCustomers.DataBind();
+                    }
                 }
             }
         }
