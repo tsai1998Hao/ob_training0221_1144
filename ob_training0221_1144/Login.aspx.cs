@@ -14,6 +14,7 @@ namespace ob_training0221_1144
     {
         protected void Page_Load(object sender, EventArgs e){ }
 
+        //登入功能
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             string Email = email.Text;
