@@ -19,26 +19,40 @@ namespace ob_training0221_1144
         {
             if (!IsPostBack)
             {
-                LoadCustomers();
+                if (Session["UserId"] != null)
+                {
+                    int userId = Convert.ToInt32(Session["UserId"]);
+                    LoadCustomers(userId); // 用 Session 取得的 userId 傳給 LoadCustomers
+                }
+                else
+                {
+                    Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+                }
             }
         }
 
-        private void LoadCustomers()
+        private void LoadCustomers(int userId)
         {
             //資料庫連線設定
             string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
             // string connectionString = "Server=localhost;Initial Catalog=TestProject_DB;User ID=sa;Password=test0713;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
 
             //SQL 語法
-            string query = "SELECT * FROM customers";
+            string query = "SELECT * FROM Customers WHERE user_id = @UserId";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                gvCustomers.DataSource = dt;
-                gvCustomers.DataBind();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);  // 綁定參數，避免 SQL 注入
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    gvCustomers.DataSource = dt;
+                    gvCustomers.DataBind();
+                }
             }
         }
 
@@ -47,7 +61,15 @@ namespace ob_training0221_1144
         protected void gvCustomers_RowEditing(object sender, GridViewEditEventArgs e)
         {
             gvCustomers.EditIndex = e.NewEditIndex;
-            LoadCustomers();  // 重新加載資料並顯示在編輯模式
+            if (Session["UserId"] != null) // 檢查是否有存 userId
+            {
+                int userId = Convert.ToInt32(Session["UserId"]);
+                LoadCustomers(userId);  // 傳入 userId，重新加載資料
+            }
+            else
+            {
+                Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+            }
         }
 
 
@@ -84,7 +106,15 @@ namespace ob_training0221_1144
             }
 
             gvCustomers.EditIndex = -1;  // 退出編輯模式
-            LoadCustomers();  // 重新加載資料
+            if (Session["UserId"] != null) // 檢查是否有存 userId
+            {
+                int userId = Convert.ToInt32(Session["UserId"]);
+                LoadCustomers(userId);  // 傳入 userId，重新加載資料
+            }
+            else
+            {
+                Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+            }
         }
 
 
@@ -106,7 +136,15 @@ namespace ob_training0221_1144
                 cmd.ExecuteNonQuery();
             }
 
-            LoadCustomers();  // 重新加載資料
+            if (Session["UserId"] != null) // 檢查是否有存 userId
+            {
+                int userId = Convert.ToInt32(Session["UserId"]);
+                LoadCustomers(userId);  // 傳入 userId，重新加載資料
+            }
+            else
+            {
+                Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+            }
         }
 
 
@@ -176,7 +214,17 @@ namespace ob_training0221_1144
                 }
 
                 // 更新 GridView，顯示新增的資料
-                LoadCustomers();  // 確保重新載入資料並顯示最新的資料  // 確保 GridView 顯示最新的資料
+
+
+                if (Session["UserId"] != null) // 檢查是否有存 userId
+                {
+                    int user_Id = Convert.ToInt32(Session["UserId"]);
+                    LoadCustomers(user_Id);  // 傳入 userId，重新加載資料，確保重新載入資料並顯示最新的資料  // 確保 GridView 顯示最新的資料
+                }
+                else
+                {
+                    Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
+                }
             }
         }
 

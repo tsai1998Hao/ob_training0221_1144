@@ -30,7 +30,7 @@ namespace ob_training0221_1144
                 string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
 
                 // 查詢是否有符合的電子郵件和密碼
-                string query = "SELECT COUNT(1) FROM users WHERE email = @email AND password = @password";
+                string query = "SELECT id FROM users WHERE email = @email AND password = @password";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
@@ -41,13 +41,16 @@ namespace ob_training0221_1144
                         cmd.Parameters.AddWithValue("@password", encryptedPassword); // 比對加密後的密碼
 
                         conn.Open();
-                        int userExists = (int)cmd.ExecuteScalar();  // 會返回該查詢語句的第一行第一列的數值
-
-                        if (userExists > 0)
+                        object result = cmd.ExecuteScalar(); //執行 SQL 查詢並回傳單一值，為了獲取id
+                        System.Diagnostics.Debug.WriteLine("查詢結果: " + result);
+                        if (result != null)
                         {
                             // 登入成功
-                            Response.Write("<script>alert('登入成功！');</script>");
-                            Response.Redirect("showCustomers.aspx");
+                            int userId = Convert.ToInt32(result);
+                            // 將id存到 Session
+                            Session["UserId"] = userId;
+                            string script = $"<script>alert('登入成功！ID: {userId}'); window.location='showCustomers.aspx?id={userId}';</script>";
+                            Response.Write(script);
                         }
                         else
                         {
