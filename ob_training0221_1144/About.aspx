@@ -7,7 +7,7 @@
     </main>
 
 
-    <h1>首頁---會員註冊</h1>
+    <h1>首頁---會員註冊test</h1>
     <div>
         <label for="name">Name:</label>
         <asp:TextBox ID="name" runat="server" placeholder="請輸入會員名稱"  oninput="validateAoumt(this)" ></asp:TextBox>
