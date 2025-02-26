@@ -6,6 +6,14 @@ using System.Web.Http;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
+
+// API測試  localhost:44380/api/customer/get-by-userid
+
+//{
+//    "user_id": 6
+//}
+
+
 namespace ob_training0221_1144.ApiControllers
 {
 

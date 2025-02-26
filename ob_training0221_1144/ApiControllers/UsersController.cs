@@ -6,6 +6,14 @@ using System.Web.Http;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
+
+// API測試  localhost:44380/api/user/get-by-email
+
+//{
+//    "email": "test01@mail"
+//}
+
+
 namespace ob_training0221_1144.ApiControllers
 {
 
