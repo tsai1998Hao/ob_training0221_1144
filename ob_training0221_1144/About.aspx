@@ -2,12 +2,10 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-
     <main aria-labelledby="title">
     </main>
 
-
-    <h1>首頁---會員註冊test</h1>
+    <h1>首頁---會員註冊</h1>
     <div>
         <label for="name">Name:</label>
         <asp:TextBox ID="name" runat="server" placeholder="請輸入會員名稱"  oninput="validateAoumt(this)" ></asp:TextBox>
@@ -20,65 +18,36 @@
         <label for="password">Password:</label>
         <asp:TextBox ID="password" runat="server" placeholder="請輸入密碼"  oninput="validateAoumt(this)" ></asp:TextBox>        
     </div>
-    <asp:LinkButton ID="btnFilter" runat="server" class="btn btn-primary" OnClick="btnFilter_Click" Visible="true" CausesValidation="true">註冊</asp:LinkButton>
+    <asp:LinkButton ID="btnFilter" runat="server" class="btn btn-primary" OnClick="btnFilter_Click" Visible="true" CausesValidation="true" OnClientClick="return validatePasswordLength(document.getElementById('password'));">註冊</asp:LinkButton>
     <button type="button" onclick="goToLogin()">進入登入頁面</button>
-
-
-
 
     <script type="text/javascript">
         function goToLogin() {
             window.location.href = "Login.aspx";
         }
 
+        //// 密碼長度驗證
+        //function validatePasswordLength(input) {
+        //    var minLength = 6;
+        //    var maxLength = 16;
 
-        //function registerUser() {
-        //    const name = document.getElementById('name').value;
-        //    const email = document.getElementById('email').value;
-        //    const password = document.getElementById('password').value;
-
-        //    console.log(name, email, password);
-
-        //    if (name && email && password) {
-        //        const data = {
-        //            name: name,
-        //            email: email,
-        //            password: password
-        //        };
-
-        //        fetch('/about.aspx', { // 指向你的後端頁面
-        //            method: 'POST',
-        //            headers: {
-        //                'Content-Type': 'application/json'
-        //            },
-        //            body: JSON.stringify({
-        //                name: "測試",
-        //                email: "test@mail.com",
-        //                password: "123456"
-        //            })
-        //        })
-        //            .then(response => response.json())
-        //            .then(data => {
-        //                if (data.success) {
-        //                    alert('會員資料新增成功');
-        //                } else {
-        //                    alert('會員資料新增失敗: ' + data.error);
-        //                }
-        //            })
-        //            .catch(error => {
-        //                console.error('Error:', error);
-        //                alert('發生錯誤');
-        //            });
-        //    } else {
-        //        alert('請填寫所有欄位');
+        //    if (input.value.length < minLength) {
+        //        alert("密碼至少需要 " + minLength + " 個字");
+        //        return false;
+        //    } else if (input.value.length > maxLength) {
+        //        alert("密碼最多只能 " + maxLength + " 個字");
+        //        return false;
         //    }
+        //    return true;
         //}
 
-</script>
+        //// 點擊註冊按鈕，執行密碼長度驗證
+        //document.getElementById('btnFilter').onclick = function (event) {
+        //    var passwordInput = document.getElementById('password');
+        //    if (!validatePasswordLength(passwordInput)) {
+        //        event.preventDefault();  // 阻止註冊
+        //    }
+        //}
+    </script>
 
 </asp:Content>
-
-
-
-
-

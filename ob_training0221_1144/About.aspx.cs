@@ -30,7 +30,12 @@ namespace ob_training0221_1144
                 Response.Write("<script>alert('請填寫所有欄位');</script>");
                 return;
             }
-
+            // 密碼長度驗證
+            if (Password.Length < 6 || Password.Length > 16)
+            {
+                Response.Write("<script>alert('密碼長度必須在6到16個字符之間');</script>");
+                return;
+            }
 
             // 將密碼加密成 MD5 
             string encryptedPassword = GetMD5Hash(Password);
