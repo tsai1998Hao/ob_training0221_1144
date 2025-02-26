@@ -360,6 +360,8 @@ namespace ob_training0221_1144
 
                     if (dt.Rows.Count == 0) // 如果搜尋結果為空
                     {
+                        txtSearch.Text = string.Empty;// 清空搜尋框的文字
+
                         // 顯示沒有符合的結果訊息
                         string alertMessage = "沒有找到符合搜尋條件的資料！";
                         string queryToShow = "SELECT * FROM Customers WHERE User_id = " + userId;
