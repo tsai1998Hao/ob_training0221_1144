@@ -12,9 +12,10 @@ namespace ob_training0221_1144
 
             // 這是基本的 Web API 路由設置
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+               name: "GetCustomerByUserId",
+                //routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/customer/get-by-userid",
+                defaults: new { controller = "Customers", action = "GetCustomerByUserId" }
             );
 
 
