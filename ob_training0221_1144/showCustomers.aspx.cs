@@ -70,9 +70,6 @@ namespace ob_training0221_1144
         }
 
 
-
-
-
         private void LoadCustomers2 (int userId, string searchKeyword)
         {
             //資料庫連線設定
@@ -98,19 +95,6 @@ namespace ob_training0221_1144
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         int edit_id;
 
@@ -276,18 +260,13 @@ namespace ob_training0221_1144
                     Response.Write("<script>alert('請先登入！'); window.location='login.aspx';</script>");
                 }
 
-
-
                 //string userId = ((TextBox)gvCustomers.FooterRow.FindControl("txtInsertUserId")).Text;
-
                 // SQL 插入語句
                 string query = "INSERT INTO Customers (Name, Phone, Address, User_id) VALUES (@Name, @Phone, @Address, @UserId)";
 
                 //資料庫連線設定
                 string connectionString = "Server=115.85.156.59;Initial Catalog=TestProject_DB;User ID=tpe003sql;Password=!gomypay#20250219;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
                 //string connectionString = "Server=localhost;Initial Catalog=TestProject_DB;User ID=sa;Password=test0713;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;";
-
-
 
                 // 使用 SqlConnection 和 SqlCommand 執行插入操作
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -304,10 +283,7 @@ namespace ob_training0221_1144
                 }
 
                 // 更新 GridView，顯示新增的資料
-
-
-                    LoadCustomers(userId);  // 傳入 userId，重新加載資料，確保重新載入資料並顯示最新的資料  // 確保 GridView 顯示最新的資料
-                
+                    LoadCustomers(userId);  // 傳入 userId，重新加載資料，確保重新載入資料並顯示最新的資料  // 確保 GridView 顯示最新的資料   
             }
         }
 
@@ -379,15 +355,6 @@ namespace ob_training0221_1144
                 }
             }
         }
-
-
-
-
-
-
-
-
-
     }
 
 }
